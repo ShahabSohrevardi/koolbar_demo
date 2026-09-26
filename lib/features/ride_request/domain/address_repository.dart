@@ -6,7 +6,7 @@ abstract class AddressRepository {
     required String address,
     String? province,
     String? city,
-    Map<String, String>? location,
+    Map<String, double>? location,
   });
 
   Future<Resource<AddressEntity>> getAddressByState(double lat, double long);

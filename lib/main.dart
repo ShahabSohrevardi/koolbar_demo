@@ -8,7 +8,8 @@ import 'package:koolbar_demo/app/bloc/permission/app_permission_cubit.dart';
 import 'package:koolbar_demo/app/di.dart';
 
 import 'app/theme/koolbar_theme.dart';
-import 'features/ride_request/presentation/pages/ride_destination_page.dart';
+
+import 'package:koolbar_demo/design_system/colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +37,16 @@ class KoolbarApp extends StatelessWidget {
       title: 'Koolbar Ride',
       debugShowCheckedModeBanner: false,
       theme: KoolbarTheme.dark(),
+      builder: (context, child) => DecoratedBox(
+        decoration: const BoxDecoration(
+          gradient: RadialGradient(
+            center: Alignment(-.9, -.9),
+            radius: 1.4,
+            colors: [Color(0xFF182943), KoolbarColors.background],
+          ),
+        ),
+        child: child,
+      ),
       routerConfig: _appRoute.config(),
     );
   }

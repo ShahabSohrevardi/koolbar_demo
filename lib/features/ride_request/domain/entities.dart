@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 
-class AddressEntity {
+class AddressEntity{
   final String status;
   final String formattedAddress;
   final String routeType;
@@ -28,22 +29,43 @@ class AddressEntity {
     required this.county,
     required this.district,
   });
+
+  // @override
+  // // TODO: implement props
+  // List<Object?> get props => [
+  //   status,
+  //   formattedAddress,
+  //   county,
+  //   district,
+  //   onOddEvenZone,
+  //   place,
+  //   city,
+  //   neighbourhood,
+  //   formattedAddress,
+  //   routeName,
+  //   routeType,
+  // ];
 }
 
-class StateEntity {
+class StateEntity extends Equatable {
   final LatLng location;
   final String province;
-  final String city;
-  final String neighbourhood;
+  final String? city;
+
+  // final String neighbourhood;
   final String unMatchedTerm;
 
   new({
     required this.location,
     required this.province,
     required this.city,
-    required this.neighbourhood,
+    // required this.neighbourhood,
     required this.unMatchedTerm,
   });
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [location, province, city, unMatchedTerm];
 }
 
 class SearchEntity {

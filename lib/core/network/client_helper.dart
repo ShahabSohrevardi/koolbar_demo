@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:koolbar_demo/core/network/api_response.dart';
 
 class ClientHelper {
   late final Dio _dio;
@@ -17,15 +16,18 @@ class ClientHelper {
       ),
     );
   }
-  Future<Response<dynamic>> get(String path,[Object? data]) async {
-    final res = await _dio.get(path,data: data);
-    if(res.statusCode!=200)
-      throw res.statusMessage??"";
+  Future<Response<dynamic>> get(
+    String path, [
+    Map<String, dynamic>? queryParameters,
+  ]) async {
+
+    final res = await _dio.get(path, queryParameters: queryParameters);
+    if (res.statusCode != 200) throw res.statusMessage ?? "";
     return res;
   }
 
-  Future<Response> post(String path,[Object? data]) async {
-    final res = await _dio.post(path,data: data);
+  Future<Response> post(String path, [Object? data]) async {
+    final res = await _dio.post(path, data: data);
     return res;
   }
 }

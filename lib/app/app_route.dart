@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:koolbar_demo/app/app_route.gr.dart';
-import 'package:koolbar_demo/features/ride_request/presentation/pages/rd_route_wrapper_page.dart';
 
 @AutoRouterConfig(replaceInRouteName: "Screen|Page,Route")
 class AppRouter extends RootStackRouter {

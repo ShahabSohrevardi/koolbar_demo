@@ -40,11 +40,16 @@ class RideDestinationRoute extends _i4.PageRouteInfo<void> {
 class RideOptionsRoute extends _i4.PageRouteInfo<RideOptionsRouteArgs> {
   RideOptionsRoute({
     _i5.Key? key,
-    required String destination,
+    required (double, double) pickup,
+    required (double, double) destination,
     List<_i4.PageRouteInfo>? children,
   }) : super(
          RideOptionsRoute.name,
-         args: RideOptionsRouteArgs(key: key, destination: destination),
+         args: RideOptionsRouteArgs(
+           key: key,
+           pickup: pickup,
+           destination: destination,
+         ),
          initialChildren: children,
        );
 
@@ -54,32 +59,44 @@ class RideOptionsRoute extends _i4.PageRouteInfo<RideOptionsRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<RideOptionsRouteArgs>();
-      return _i2.RideOptionsPage(key: args.key, destination: args.destination);
+      return _i2.RideOptionsPage(
+        key: args.key,
+        pickup: args.pickup,
+        destination: args.destination,
+      );
     },
   );
 }
 
 class RideOptionsRouteArgs {
-  const RideOptionsRouteArgs({this.key, required this.destination});
+  const RideOptionsRouteArgs({
+    this.key,
+    required this.pickup,
+    required this.destination,
+  });
 
   final _i5.Key? key;
 
-  final String destination;
+  final (double, double) pickup;
+
+  final (double, double) destination;
 
   @override
   String toString() {
-    return 'RideOptionsRouteArgs{key: $key, destination: $destination}';
+    return 'RideOptionsRouteArgs{key: $key, pickup: $pickup, destination: $destination}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! RideOptionsRouteArgs) return false;
-    return key == other.key && destination == other.destination;
+    return key == other.key &&
+        pickup == other.pickup &&
+        destination == other.destination;
   }
 
   @override
-  int get hashCode => key.hashCode ^ destination.hashCode;
+  int get hashCode => key.hashCode ^ pickup.hashCode ^ destination.hashCode;
 }
 
 /// generated route for

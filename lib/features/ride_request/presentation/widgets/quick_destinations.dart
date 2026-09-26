@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:koolbar_demo/core/systemdesign/colors.dart';
+import 'package:koolbar_demo/design_system/colors.dart';
 
 class QuickDestinations extends StatelessWidget {
   const QuickDestinations({super.key});

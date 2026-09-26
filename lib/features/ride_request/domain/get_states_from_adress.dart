@@ -14,7 +14,7 @@ class GetStatesFromAdress {
     required String address,
     String? province,
     String? city,
-    Map<String, String>? location,
+    Map<String, double>? location,
   }) => _repository.getStatesByAddress(
     address: address,
     province: province,

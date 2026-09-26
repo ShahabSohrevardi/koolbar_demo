@@ -14,20 +14,16 @@ class ApiResponse<T> {
   });
 
   ApiResponse<H> copyWithData<H>(H data) => ApiResponse<H>(
-        statusCode: statusCode,
-        data: data,
-        successMessage: successMessage,
-        errorMessage: errorMessage,
-        rawData: rawData,
-      );
+    statusCode: statusCode,
+    data: data,
+    successMessage: successMessage,
+    errorMessage: errorMessage,
+    rawData: rawData,
+  );
 
   ApiResponse.success(String message, int statusCode, dynamic data)
-      : this(
-          successMessage: message,
-          statusCode: statusCode,
-          data: data,
-        );
+    : this(successMessage: message, statusCode: statusCode, data: data);
 
   ApiResponse.failed(String message, int statusCode)
-      : this(errorMessage: message, statusCode: statusCode);
+    : this(errorMessage: message, statusCode: statusCode);
 }

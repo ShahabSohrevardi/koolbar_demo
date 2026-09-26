@@ -4,7 +4,7 @@ import 'package:koolbar_demo/features/ride_request/data/address_cloud_data_sourc
 import 'package:koolbar_demo/features/ride_request/domain/entities.dart';
 import 'package:koolbar_demo/features/ride_request/domain/address_repository.dart';
 
-@LazySingleton(scope: "RideRequest",as: AddressRepository)
+@LazySingleton(scope: "RideRequest", as: AddressRepository)
 class AddressDataRepository extends AddressRepository {
   final AddressCloudDataSource _cloudDataSource;
 
@@ -28,7 +28,7 @@ class AddressDataRepository extends AddressRepository {
     required String address,
     String? province,
     String? city,
-    Map<String, String>? location,
+    Map<String, double>? location,
   }) async {
     try {
       final res = await _cloudDataSource.getStatesByAddress(

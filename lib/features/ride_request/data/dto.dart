@@ -4,7 +4,7 @@ import 'package:maplibre_gl/maplibre_gl.dart';
 
 part 'dto.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class AddressDTO {
   final String status;
   @JsonKey(name: "formatted_address")
@@ -19,7 +19,7 @@ class AddressDTO {
   final String place;
   @JsonKey(name: "in_traffic_zone")
   final bool inTrafficZone;
-  @JsonKey(name: "on_odd_even_zone")
+  @JsonKey(name: "in_odd_even_zone")
   final bool onOddEvenZone;
   final String county;
   final String district;
@@ -58,19 +58,19 @@ class AddressDTO {
   );
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class StateDTO {
-  final Map<String, String> location;
+  final Map<String, dynamic> location;
   final String province;
-  final String city;
-  final String neighbourhood;
+  final String? city;
+  // final String neighbourhood;
   final String unMatchedTerm;
 
   new({
     required this.location,
     required this.province,
     required this.city,
-    required this.neighbourhood,
+    // required this.neighbourhood,
     required this.unMatchedTerm,
   });
 
@@ -79,24 +79,24 @@ class StateDTO {
 
   StateEntity toEntity() => StateEntity(
     location: LatLng(
-      location["latitude"] as double,
-      location["longitude"] as double,
+      _readCoordinate(location, const ['latitude', 'lat', 'y']),
+      _readCoordinate(location, const ['longitude', 'lng', 'x']),
     ),
     province: province,
     city: city,
-    neighbourhood: neighbourhood,
+    // neighbourhood: neighbourhood,
     unMatchedTerm: unMatchedTerm,
   );
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class SearchDTO {
   final String title;
   final String address;
   final String category;
   final String region;
   final String neighbourhood;
-  final Map<String, String> location;
+  final Map<String, dynamic> location;
   final String poiHash;
 
   new({
@@ -119,9 +119,25 @@ class SearchDTO {
     region: region,
     neighbourhood: neighbourhood,
     location: LatLng(
-      location["latitude"] as double,
-      location["longitude"] as double,
+      _readCoordinate(location, const ['latitude', 'lat', 'y']),
+      _readCoordinate(location, const ['longitude', 'lng', 'x']),
     ),
     poiHash: poiHash,
+  );
+}
+
+double _readCoordinate(Map<String, dynamic> location, List<String> keys) {
+  for (final key in keys) {
+    final value = location[key];
+    if (value != null) {
+      if (value is num) return value.toDouble();
+      if (value is String) {
+        final coordinate = double.tryParse(value);
+        if (coordinate != null) return coordinate;
+      }
+    }
+  }
+  throw const FormatException(
+    'Search result does not include a valid location.',
   );
 }

@@ -1,7 +1,8 @@
+import 'dart:convert';
+
 import 'package:injectable/injectable.dart';
 import 'package:koolbar_demo/core/network/client_helper.dart';
 import 'package:koolbar_demo/features/ride_request/data/dto.dart';
-import 'package:koolbar_demo/features/ride_request/domain/entities.dart';
 
 @LazySingleton(scope: "RideRequest")
 class AddressCloudDataSource {
@@ -21,11 +22,21 @@ class AddressCloudDataSource {
     required String address,
     String? province,
     String? city,
-    Map<String, String>? location,
+    Map<String, double>? location,
   }) async {
-    final res = await _clientHelper.get(
-      "/v5/reverse?address=$address&province=$province&city=$city",
-    );
+    final queryParameters = <String,dynamic>{"address": address};
+    if (province != null) {
+      queryParameters["province"] = province;
+    }
+    if (city != null) {
+      queryParameters["city"] = city;
+    }
+    if (location != null) {
+      queryParameters["location"] = {
+        "latitude": location["latitude"], "longitude": location["longitude"]
+      };
+    }
+    final res = await _clientHelper.get("/geocoding/v1",{"json":jsonEncode(queryParameters)});
     if (res.statusCode != 200) {
       throw res.statusMessage!;
     }
@@ -34,12 +45,12 @@ class AddressCloudDataSource {
         .toList();
   }
 
-  Future<List<SearchDTO>> getSearches(
-    String term,
-    Map<String, double> location,
-  ) async {
-    final res = await _clientHelper.get("v3/search?term=$term", {
-      "center": location,
+  Future<List<SearchDTO>> getSearches(String term,
+      Map<String, double> location,) async {
+    final res = await _clientHelper.get('/v1/search', {
+      'term': term,
+      'lat': location['latitude'],
+      'lng': location['longitude'],
     });
     return (res.data["items"] as List<dynamic>)
         .map((e) => SearchDTO.fromJson(e))

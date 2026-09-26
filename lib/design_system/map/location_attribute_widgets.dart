@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 
 class LocationDot extends StatelessWidget {
-  const LocationDot({super.key, required this.color});
+  const LocationDot({
+    super.key,
+    required this.color,
+    required this.width,
+    required this.height,
+  });
+
   final Color color;
+  final double width;
+  final double height;
 
   @override
   Widget build(BuildContext context) => Container(
-    height: 32,
-    width: 32,
+    height: width,
+    width: height,
     decoration: BoxDecoration(
       color: color.withValues(alpha: .15),
       shape: BoxShape.circle,

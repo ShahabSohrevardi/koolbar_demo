@@ -30,6 +30,8 @@ import 'package:koolbar_demo/features/ride_request/domain/get_searches.dart'
     as _i353;
 import 'package:koolbar_demo/features/ride_request/domain/get_states_from_adress.dart'
     as _i412;
+import 'package:koolbar_demo/features/ride_request/presentation/bloc/location_to_address_bloc/location_to_address_cubit.dart'
+    as _i1;
 import 'package:koolbar_demo/features/ride_request/presentation/bloc/search_address_bloc/search_address_bloc.dart'
     as _i402;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
@@ -88,8 +90,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh.lazySingleton<_i353.GetSearches>(
           () => _i353.GetSearches(gh<_i1065.AddressRepository>()),
         );
+        gh.factory<_i1.LocationToAddressCubit>(
+          () => _i1.LocationToAddressCubit(gh<_i625.GetAddressesFromState>()),
+        );
         gh.factory<_i402.SearchAddressBloc>(
-          () => _i402.SearchAddressBloc(gh<_i353.GetSearches>()),
+          () => _i402.SearchAddressBloc(gh<_i412.GetStatesFromAdress>()),
         );
       },
     );

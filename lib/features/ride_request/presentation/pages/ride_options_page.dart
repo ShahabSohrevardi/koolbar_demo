@@ -1,36 +1,29 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-// import 'package:flutter_map/flutter_map.dart';
-import 'package:koolbar_demo/core/systemdesign/card_ui.dart';
-import 'package:koolbar_demo/core/systemdesign/colors.dart';
+import 'package:koolbar_demo/design_system/card_ui.dart';
+import 'package:koolbar_demo/design_system/colors.dart';
+import 'package:koolbar_demo/features/ride_request/domain/entities.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 
 import '../models/ride_models.dart';
+import '../widgets/ride_map_view.dart';
 
 @RoutePage()
 class RideOptionsPage extends StatefulWidget {
-  const RideOptionsPage({super.key, required this.destination});
 
-  final String destination;
+  const RideOptionsPage({
+    super.key,
+    required this.pickup,
+    required this.destination,
+  });
+  final (double,double) pickup;
+  final (double,double) destination;
 
   @override
   State<RideOptionsPage> createState() => _RideOptionsPageState();
 }
 
 class _RideOptionsPageState extends State<RideOptionsPage> {
-  static const _start = LatLng(1.2902, 103.8519);
-  static const _end = LatLng(1.3083, 103.8568);
-  static const _route = [
-    _start,
-    LatLng(1.2912, 103.8529),
-    LatLng(1.2910, 103.8556),
-    LatLng(1.2944, 103.8559),
-    LatLng(1.2978, 103.8582),
-    LatLng(1.3004, 103.8592),
-    LatLng(1.3027, 103.8581),
-    _end,
-  ];
   static const _options = [
     RideOption(
       name: 'Economy',
@@ -65,188 +58,46 @@ class _RideOptionsPageState extends State<RideOptionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          const _RideMap(start: _start, end: _end, route: _route),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(18),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  RoundIconButton(
-                    icon: Icons.arrow_back_ios_new_rounded,
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                  _DestinationPill(destination: widget.destination),
-                ],
+      body: Builder(
+        builder: (context) {
+          return Stack(
+            children: [
+              RideMapView(
+                initialLocation: LatLng(widget.pickup.$1,widget.pickup.$2),
+                pickup:LatLng(widget.pickup.$1,widget.pickup.$2),
+                destination: LatLng(widget.destination.$1,widget.destination.$2),
               ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: _RideSheet(
-              selected: _selected,
-              options: _options,
-              onChanged: (index) => setState(() => _selected = index),
-              confirmLabel:
-                  'Confirm ${_selectedOption.name} Ride • ${_selectedOption.price}',
-            ),
-          ),
-        ],
+              SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(18),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RoundIconButton(
+                        icon: Icons.arrow_back_ios_new_rounded,
+                        onPressed: context.router.maybePop,
+                      ),
+                      // _DestinationPill(destination: widget.destination.province),
+                    ],
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: _RideSheet(
+                  selected: _selected,
+                  options: _options,
+                  onChanged: (index) => setState(() => _selected = index),
+                  confirmLabel:
+                      'Confirm ${_selectedOption.name} Ride • ${_selectedOption.price}',
+                ),
+              ),
+            ],
+          );
+        }
       ),
     );
   }
-}
-
-class _RideMap extends StatelessWidget {
-  const _RideMap({required this.start, required this.end, required this.route});
-
-  final LatLng start;
-  final LatLng end;
-  final List<LatLng> route;
-
-  @override
-  Widget build(BuildContext context) => ColorFiltered(
-    colorFilter: const ColorFilter.matrix([
-      .36,
-      0,
-      0,
-      0,
-      0,
-      0,
-      .48,
-      0,
-      0,
-      4,
-      0,
-      0,
-      .70,
-      0,
-      18,
-      0,
-      0,
-      0,
-      1,
-      0,
-    ]),
-    child: Builder(
-      builder: (context) {
-        final api_key = dotenv.get("NESHAN_API_KEY");
-        return MapLibreMap(
-          styleString:
-              "https://static.neshan.org/sdk/maplibre/styles/light.json",
-          initialCameraPosition: CameraPosition(
-            target: LatLng(35.6892, 51.3890),
-            zoom: 15,
-          ),
-        );
-      },
-    ),
-    // FlutterMap(
-    //   options: const MapOptions(
-    //     initialCenter: LatLng(1.2985, 103.8565),
-    //     initialZoom: 14.3,
-    //   ),
-    //   children: [
-    //     Builder(
-    //       builder: (context) {
-    //         final api_key=dotenv.get("NESHAN_API_KEY");
-    //         return TileLayer(
-    //           urlTemplate: 'https://api.neshan.org/v5/static?key=$api_key&style=light&zoom=12&width=620&height=400&latitude=35.75542836926&longitude=51.177361249324&marker=',
-    //           userAgentPackageName: 'com.illu.koolbar_demo',
-    //         );
-    //       }
-    //     ),
-    //     PolylineLayer(
-    //       polylines: [
-    //         Polyline(
-    //           points: route,
-    //           strokeWidth: 14,
-    //           color: const Color(0x6610D9B2),
-    //           strokeCap: StrokeCap.round,
-    //           strokeJoin: StrokeJoin.round,
-    //         ),
-    //         Polyline(
-    //           points: route,
-    //           strokeWidth: 6,
-    //           color: KoolbarColors.cyan,
-    //           strokeCap: StrokeCap.round,
-    //           strokeJoin: StrokeJoin.round,
-    //         ),
-    //       ],
-    //     ),
-    //     MarkerLayer(
-    //       markers: [
-    //         Marker(
-    //           point: start,
-    //           width: 54,
-    //           height: 54,
-    //           child: const _StartMarker(),
-    //         ),
-    //         Marker(
-    //           point: end,
-    //           width: 58,
-    //           height: 66,
-    //           child: const _EndMarker(),
-    //         ),
-    //       ],
-    //     ),
-    //   ],
-    // ),
-  );
-}
-
-class _StartMarker extends StatelessWidget {
-  const _StartMarker();
-
-  @override
-  Widget build(BuildContext context) => DecoratedBox(
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      color: KoolbarColors.primary,
-      border: Border.all(color: const Color(0xFF9DFFE8), width: 3),
-      boxShadow: const [BoxShadow(color: Color(0xAA10D9B2), blurRadius: 18)],
-    ),
-    child: const Icon(
-      Icons.person_pin_circle_rounded,
-      color: Colors.white,
-      size: 30,
-    ),
-  );
-}
-
-class _EndMarker extends StatelessWidget {
-  const _EndMarker();
-
-  @override
-  Widget build(BuildContext context) => Stack(
-    alignment: Alignment.topCenter,
-    children: [
-      Container(
-        height: 48,
-        width: 48,
-        decoration: const BoxDecoration(
-          color: KoolbarColors.danger,
-          shape: BoxShape.circle,
-          boxShadow: [BoxShadow(color: Color(0xAAFF6473), blurRadius: 18)],
-        ),
-        child: const Icon(
-          Icons.location_on_rounded,
-          color: Colors.white,
-          size: 30,
-        ),
-      ),
-      const Positioned(
-        top: 40,
-        child: Icon(
-          Icons.arrow_drop_down_rounded,
-          size: 28,
-          color: KoolbarColors.danger,
-        ),
-      ),
-    ],
-  );
 }
 
 class _DestinationPill extends StatelessWidget {

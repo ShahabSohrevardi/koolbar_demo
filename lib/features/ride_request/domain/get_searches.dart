@@ -7,5 +7,8 @@ import 'package:koolbar_demo/features/ride_request/domain/entities.dart';
 class GetSearches {
   final AddressRepository _repository;
   new(this._repository);
-  Future<Resource<List<SearchEntity>>> call(String term,Map<String,double> location) => _repository.getSearches(term, location);
+  Future<Resource<List<SearchEntity>>> call(
+    String term,
+    Map<String, double> location,
+  ) => _repository.getSearches(term, location);
 }
