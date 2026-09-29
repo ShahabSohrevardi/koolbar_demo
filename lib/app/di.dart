@@ -11,7 +11,6 @@ final getIt = GetIt.instance;
 Future<void> initConfiguration() => getIt.init();
 
 @module
-@module
 abstract class AppModule {
   @preResolve
   @singleton

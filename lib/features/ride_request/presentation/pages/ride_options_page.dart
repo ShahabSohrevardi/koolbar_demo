@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:koolbar_demo/design_system/card_ui.dart';
 import 'package:koolbar_demo/design_system/colors.dart';
-import 'package:koolbar_demo/features/ride_request/domain/entities.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 
 import '../models/ride_models.dart';
@@ -10,7 +9,6 @@ import '../widgets/ride_map_view.dart';
 
 @RoutePage()
 class RideOptionsPage extends StatefulWidget {
-
   const RideOptionsPage({
     super.key,
     required this.pickup,
@@ -50,9 +48,7 @@ class _RideOptionsPageState extends State<RideOptionsPage> {
       color: Color(0xFF7B8CA3),
     ),
   ];
-
   var _selected = 1;
-
   RideOption get _selectedOption => _options[_selected];
 
   @override

@@ -1,12 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:koolbar_demo/app/di.config.dart';
 import 'package:koolbar_demo/app/di.dart';
+import 'package:koolbar_demo/features/ride_request/presentation/bloc/save_location_bloc/new_saved_location_cubit.dart';
 
 @RoutePage()
 class RideRequestWrapperPage extends StatefulWidget
     implements AutoRouteWrapper {
   const RideRequestWrapperPage({super.key});
+
   @override
   State<StatefulWidget> createState() => RideRequestWrapperPageState();
 

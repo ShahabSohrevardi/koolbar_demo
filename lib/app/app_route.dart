@@ -15,6 +15,7 @@ class AppRouter extends RootStackRouter {
           path: "request-dest",
         ),
         AutoRoute(page: RideOptionsRoute.page, path: "ride-option"),
+        AutoRoute(page: NewSavedLocationRoute.page,path: "saved-locations/new")
       ],
       initial: true,
       path: "/dashboard",

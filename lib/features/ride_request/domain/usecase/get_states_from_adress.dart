@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:koolbar_demo/core/common/resource.dart';
 import 'package:koolbar_demo/features/ride_request/domain/entities.dart';
 
-import 'address_repository.dart';
+import '../address_repository.dart';
 
 @LazySingleton(scope: "RideRequest")
 class GetStatesFromAdress {

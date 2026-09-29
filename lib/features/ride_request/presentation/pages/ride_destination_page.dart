@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -56,8 +55,6 @@ class _RideDestinationPageState extends State<RideDestinationPage> {
     _searchDebounce?.cancel();
     super.dispose();
   }
-
-  void _setPlaces() {}
 
   void _changeCenterLocationToEntity(LatLng center) {
     _searchDebounce?.cancel();

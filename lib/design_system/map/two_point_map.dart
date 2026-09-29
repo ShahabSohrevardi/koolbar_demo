@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:koolbar_demo/core/utilities/svg_bytes.dart';
 import 'package:koolbar_demo/design_system/colors.dart';
-import 'package:koolbar_demo/core/utils/map_locations.dart';
+import 'package:koolbar_demo/core/utilities/map_locations.dart';
 import 'package:koolbar_demo/design_system/map/location_attribute_widgets.dart';
+import 'package:koolbar_demo/design_system/map/types.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
+import './map_style.dart';
 
 class SelectTwoPointMap extends StatefulWidget {
   final LatLng? currentLocation;
   final LatLng? pickupLocation;
   final LatLng? destinationLocation;
-  final void Function(LatLng center) onChangeCenterLocation;
-  final void Function(MapLibreMapController mapController) onMapReady;
+  final OnMapCenterPositionChanged onChangeCenterLocation;
+  final OnMapReady onMapReady;
 
   const new({
     super.key,
@@ -84,7 +86,7 @@ class _SelectTwoPointMapState extends State<SelectTwoPointMap> {
     return Stack(
       children: [
         MapLibreMap(
-          styleString: _darkMapStyle,
+          styleString: darkMapStyle,
           onMapCreated: (controller) async {
             _mapController = controller;
             final markerBytes = await svgToPngBytes("assets/icons/marker.svg");
@@ -147,33 +149,4 @@ class _SelectTwoPointMapState extends State<SelectTwoPointMap> {
   }
 }
 
-const _darkMapStyle = '''
-{
-  "version": 8,
-  "name": "Koolbar dark",
-  "sources": {
-    "openstreetmap": {
-      "type": "raster",
-      "tiles": ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
-      "tileSize": 256,
-      "attribution": "© OpenStreetMap contributors"
-    }
-  },
-  "layers": [
-    {"id": "background", "type": "background", "paint": {"background-color": "#07111f"}},
-    {
-      "id": "openstreetmap",
-      "type": "raster",
-      "source": "openstreetmap",
-      "paint": {
-        "raster-opacity": 0.72,
-        "raster-brightness-min": 0.04,
-        "raster-brightness-max": 0.48,
-        "raster-saturation": -0.72,
-        "raster-contrast": 0.35,
-        "raster-hue-rotate": 198
-      }
-    }
-  ]
-}
-''';
+

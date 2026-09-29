@@ -2,9 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:koolbar_demo/features/ride_request/domain/entities.dart';
-import 'package:koolbar_demo/features/ride_request/domain/get_addresses_from_state.dart';
-import 'package:maplibre_gl/maplibre_gl.dart';
-import 'package:meta/meta.dart';
+import 'package:koolbar_demo/features/ride_request/domain/usecase/get_addresses_from_state.dart';
+import "package:meta/meta.dart";
 import 'package:koolbar_demo/core/common/resource.dart';
 
 part 'location_to_address_state.dart';
