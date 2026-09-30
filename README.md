@@ -27,7 +27,7 @@
 
 | Home | Ride Request | Tracking |
 |:---:|:---:|:---:|
-| `docs/screenshots/home.png` | `docs/screenshots/request.png` | `docs/screenshots/tracking.png` |
+| `docs/screen-shots/screenshot-1.png` | `docs/screenshots/request.png` | `docs/screenshots/tracking.png` |
 
 <!-- TODO: Replace the table above with real screenshots or a demo GIF -->
 
