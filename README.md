@@ -38,6 +38,7 @@ To add more screenshots, put the files in docs/screen-shots/ and add them side b
   <img src="docs/screen-shots/Screenshot-1.png" alt="Home" width="250" />
   <img src="docs/screen-shots/Screenshot-2.png" alt="Ride Request" width="250" />
   <img src="docs/screen-shots/Screenshot-3.png" alt="Tracking" width="250" />
+  <img src="docs/screen-shots/Screenshot-4.png" alt="Tracking" width="250" />
 </div>
 -->
 
