@@ -41,7 +41,7 @@ class QuickDestinations extends StatelessWidget {
                 avatar: item.iconCodePoint == null
                     ? Container()
                     : Icon(
-                        IconData(item.iconCodePoint!),
+                        Icons.home,
                         color: index == 1
                             ? KoolbarColors.primary
                             : const Color(0xFFD9E5FA),
