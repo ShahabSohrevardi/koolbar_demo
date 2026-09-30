@@ -15,7 +15,7 @@ class AddressEntity {
   final String county;
   final String district;
 
-  new({
+  AddressEntity({
     required this.status,
     required this.formattedAddress,
     required this.routeType,
@@ -39,7 +39,7 @@ class StateEntity extends Equatable {
   // final String neighbourhood;
   final String unMatchedTerm;
 
-  new({
+  const StateEntity({
     required this.location,
     required this.province,
     required this.city,
@@ -61,7 +61,7 @@ class SearchEntity {
   final LatLng location;
   final String poiHash;
 
-  new({
+  SearchEntity({
     required this.title,
     required this.address,
     required this.category,
@@ -79,7 +79,7 @@ class NewSavedLocationEntity {
   final double longitude;
   final int? iconCodePoint;
 
-  new({
+  NewSavedLocationEntity({
     required this.name,
     required this.latitude,
     required this.longitude,
@@ -88,14 +88,12 @@ class NewSavedLocationEntity {
 }
 
 class SavedLocationEntity {
-  final String id;
   final String name;
   final double latitude;
   final double longitude;
   final int? iconCodePoint;
 
-  new({
-    required this.id,
+  SavedLocationEntity({
     required this.name,
     required this.latitude,
     required this.longitude,

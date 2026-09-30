@@ -4,7 +4,7 @@ import 'package:koolbar_demo/features/ride_request/data/models.dart';
 
 @LazySingleton(scope: "RideRequest")
 class SavedLocationDao {
-  new() {
+  SavedLocationDao() {
     Hive.registerAdapter(SavedLocationAdapter());
   }
   Future<Box<SavedLocation>> _openBox() async {
@@ -18,8 +18,7 @@ class SavedLocationDao {
     final box=await _openBox();
     final counterBox=await Hive.openBox<int>("saved_location_counter_box");
     var lastID=counterBox.get("last_id",defaultValue: 0)!;
-    var newID=lastID++;
-    location.id=newID.toString();
+    var newID=++lastID;
     await box.put(newID, location);
     await counterBox.put("last_id", newID);
     await counterBox.close();
@@ -33,9 +32,10 @@ class SavedLocationDao {
     await box.close();
     return res;
   }
+
   Future<SavedLocation?> findByID(String id) async {
     final box =await _openBox();
-    final res=box.get(id);
+    final res=box.get(int.parse(id));
     await box.close();
     return res;
   }

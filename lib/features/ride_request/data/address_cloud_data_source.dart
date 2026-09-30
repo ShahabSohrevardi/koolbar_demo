@@ -8,7 +8,7 @@ import 'package:koolbar_demo/features/ride_request/data/dto.dart';
 class AddressCloudDataSource {
   final ClientHelper _clientHelper;
 
-  new(@Named("MapClient") this._clientHelper);
+  AddressCloudDataSource(@Named("MapClient") this._clientHelper);
 
   Future<AddressDTO> getAddressByState(double lat, double long) async {
     final res = await _clientHelper.get("/v5/reverse?lat=$lat&lng=$long");

@@ -14,10 +14,10 @@ import 'package:koolbar_demo/design_system/map/select_location_map.dart';
 import 'package:koolbar_demo/features/ride_request/domain/entities.dart';
 import 'package:koolbar_demo/features/ride_request/presentation/bloc/location_to_address_bloc/location_to_address_cubit.dart';
 import 'package:koolbar_demo/features/ride_request/presentation/bloc/save_location_bloc/new_saved_location_cubit.dart';
+import 'package:koolbar_demo/features/ride_request/presentation/bloc/saved_locations_bloc/saved_locations_cubit.dart';
 import 'package:koolbar_demo/features/ride_request/presentation/bloc/search_address_bloc/search_address_bloc.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:shimmer/shimmer.dart';
-
 part '../widgets/location_search.dart';
 
 @RoutePage()
@@ -122,7 +122,7 @@ class _NewSavedLocationPageState extends State<NewSavedLocationPage> {
             ),
             BlocBuilder<GeolocatorCubit, GeolocatorState>(
               builder: (context, state) {
-                if (state is GeolocatorLoading) {
+                if (state is! GeolocatorSuccess) {
                   return Container();
                 }
                 return Padding(
@@ -186,7 +186,6 @@ class _SelectLocationDialogState extends State<_SelectLocationDialog> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Widget buildIcon(String name, IconData icon) {
       return ActionChip(
@@ -235,8 +234,11 @@ class _SelectLocationDialogState extends State<_SelectLocationDialog> {
       key: _formKey,
       child: BlocListener<NewSavedLocationCubit, NewSaveLocationState>(
         listener: (context, state) {
-          if (state is SaveLocationSuccess) {
+          if (state is NewSaveLocationSuccess) {
             context.router.maybePop(state.savedLocation);
+          }
+          else if (state is NewSavedLocationError){
+            showErrorSnackBar(context, state.errorMsg!);
           }
         },
         child: GlassPanel(
@@ -274,10 +276,10 @@ class _SelectLocationDialogState extends State<_SelectLocationDialog> {
                     width: double.infinity,
                     height: 50,
                     child: FilledButton(
-                      onPressed: state is SaveLocationLoading
+                      onPressed: state is NewSaveLocationLoading
                           ? null
                           : _saveLocation,
-                      child: (state is SaveLocationLoading)
+                      child: (state is NewSaveLocationLoading)
                           ? Center(
                               child: SizedBox(
                                 width: 30,

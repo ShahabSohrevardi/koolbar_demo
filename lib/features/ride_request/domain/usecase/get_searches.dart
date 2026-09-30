@@ -6,7 +6,7 @@ import 'package:koolbar_demo/features/ride_request/domain/entities.dart';
 @LazySingleton(scope: "RideRequest")
 class GetSearches {
   final AddressRepository _repository;
-  new(this._repository);
+  GetSearches(this._repository);
   Future<Resource<List<SearchEntity>>> call(
     String term,
     Map<String, double> location,

@@ -24,7 +24,7 @@ class AddressDTO {
   final String county;
   final String district;
 
-  new({
+  AddressDTO({
     required this.status,
     required this.formattedAddress,
     required this.routeType,
@@ -66,7 +66,7 @@ class StateDTO {
   // final String neighbourhood;
   final String unMatchedTerm;
 
-  new({
+  StateDTO({
     required this.location,
     required this.province,
     required this.city,
@@ -99,7 +99,7 @@ class SearchDTO {
   final Map<String, dynamic> location;
   final String poiHash;
 
-  new({
+  SearchDTO({
     required this.title,
     required this.address,
     required this.category,

@@ -5,7 +5,6 @@ import 'package:koolbar_demo/core/common/resource.dart';
 import 'package:koolbar_demo/features/ride_request/domain/entities.dart';
 import 'package:koolbar_demo/features/ride_request/domain/usecase/get_saved_locations.dart';
 import 'package:meta/meta.dart';
-
 part 'saved_locations_state.dart';
 
 @Injectable(scope: "RideRequest")
@@ -13,10 +12,8 @@ class SavedLocationsCubit extends Cubit<SavedLocationsState> {
   final GetSavedLocations _getSavedLocations;
   SavedLocationsCubit(this._getSavedLocations) : super(SavedLocationsInitial());
 
-  void savedLocationsUpdated(List<SavedLocationEntity> locations){
-    var savedLocations =state.savedLocations;
-    savedLocations?.addAll(locations);
-    emit(state.copyWith(savedLocations: savedLocations));
+  void updateSavedLocations(List<SavedLocationEntity> locations){
+    emit(state.copyWith(savedLocations: [...state.savedLocations,...locations]));
   }
 
   void getSavedLocations() async {

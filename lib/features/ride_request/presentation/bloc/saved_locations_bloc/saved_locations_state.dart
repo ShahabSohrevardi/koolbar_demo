@@ -2,43 +2,36 @@ part of 'saved_locations_cubit.dart';
 
 @immutable
 class SavedLocationsState extends Equatable {
-  final List<SavedLocationEntity>? savedLocations;
+  final List<SavedLocationEntity> savedLocations;
   final String? errorMsg;
-  const new({this.savedLocations, this.errorMsg});
+  final bool isLoading;
 
-  const factory SavedLocationsState.success(
+  const SavedLocationsState({
+    this.savedLocations = const [],
+    this.errorMsg,
+    this.isLoading = false,
+  });
+
+  factory SavedLocationsState.success(
     List<SavedLocationEntity> savedLocations,
-  ) = SavedLocationsLoaded;
+  ) => SavedLocationsState(savedLocations: savedLocations);
 
-  const factory SavedLocationsState.failed({required String errorMsg}) =
-      SavedLocationFailed;
+  factory SavedLocationsState.failed({required String errorMsg}) =>
+      SavedLocationsState(errorMsg: errorMsg);
 
-  const factory SavedLocationsState.loading() = SavedLocationsLoading;
+  factory SavedLocationsState.loading() => SavedLocationsState(isLoading: true);
 
   SavedLocationsState copyWith({
     List<SavedLocationEntity>? savedLocations,
     String? errorMsg,
   }) => SavedLocationsState(
-    savedLocations: this.savedLocations ?? savedLocations,
+    savedLocations: savedLocations ?? this.savedLocations,
     errorMsg: this.errorMsg ?? errorMsg,
   );
 
   @override
   // TODO: implement props
-  List<Object?> get props => [savedLocations?.length ?? 0, errorMsg];
-}
-
-final class SavedLocationsLoaded extends SavedLocationsState {
-  const new(List<SavedLocationEntity> savedLocations)
-    : super(savedLocations: savedLocations);
-}
-
-final class SavedLocationFailed extends SavedLocationsState {
-  const new({required String errorMsg}) : super(errorMsg: errorMsg);
-}
-
-final class SavedLocationsLoading extends SavedLocationsState {
-  const new();
+  List<Object?> get props => [savedLocations, errorMsg, isLoading];
 }
 
 final class SavedLocationsInitial extends SavedLocationsState {}

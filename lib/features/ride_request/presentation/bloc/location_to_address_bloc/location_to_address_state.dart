@@ -5,7 +5,7 @@ sealed class LocationToAddressState extends Equatable {
   final AddressEntity? entity;
   final String? errorMsg;
 
-  const new({this.entity, this.errorMsg});
+  const LocationToAddressState({this.entity, this.errorMsg});
 
   factory LocationToAddressState.initial() => LocationToAddressInitial();
 

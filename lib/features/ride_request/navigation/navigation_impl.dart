@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 import 'package:koolbar_demo/app/app_route.gr.dart';
 import 'package:koolbar_demo/features/ride_request/api/navigation.dart';
+import 'package:koolbar_demo/features/ride_request/domain/entities.dart';
 
 @LazySingleton(as: RideRequestNavigation, scope: "RideRequestApi")
 class RideRequestNavigationImpl implements RideRequestNavigation {
@@ -22,7 +23,7 @@ class RideRequestNavigationImpl implements RideRequestNavigation {
 }
 
 extension RideRequestNavigationExtension on StackRouter {
-  void pushNewSavedLocation() => push(NewSavedLocationRoute());
+  Future<SavedLocationEntity?> pushNewSavedLocation() => push<SavedLocationEntity>(NewSavedLocationRoute());
   void pushRideOptions((double, double) pickup, (double, double) destination) =>
       push(RideOptionsRoute(pickup: pickup, destination: destination));
 }

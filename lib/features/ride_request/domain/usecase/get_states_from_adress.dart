@@ -8,7 +8,7 @@ import '../address_repository.dart';
 class GetStatesFromAdress {
   final AddressRepository _repository;
 
-  new({required this._repository});
+  GetStatesFromAdress({required this._repository});
 
   Future<Resource<List<StateEntity>>> call({
     required String address,

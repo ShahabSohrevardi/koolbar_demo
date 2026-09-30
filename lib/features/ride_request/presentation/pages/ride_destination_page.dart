@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -6,7 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:koolbar_demo/design_system/map/location_attribute_widgets.dart';
 import 'package:koolbar_demo/design_system/map/two_point_map.dart';
+import 'package:koolbar_demo/features/ride_request/navigation/navigation_impl.dart';
 import 'package:koolbar_demo/features/ride_request/presentation/bloc/location_to_address_bloc/location_to_address_cubit.dart';
+import 'package:koolbar_demo/features/ride_request/presentation/bloc/save_location_bloc/new_saved_location_cubit.dart';
+import 'package:koolbar_demo/features/ride_request/presentation/bloc/saved_locations_bloc/saved_locations_cubit.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:koolbar_demo/app/app_route.gr.dart';
 import 'package:koolbar_demo/app/bloc/geolocator/geolocator_cubit.dart';
@@ -16,6 +20,7 @@ import 'package:koolbar_demo/design_system/colors.dart';
 import 'package:koolbar_demo/features/ride_request/domain/entities.dart';
 import 'package:koolbar_demo/features/ride_request/presentation/bloc/search_address_bloc/search_address_bloc.dart';
 import 'package:koolbar_demo/features/ride_request/presentation/widgets/quick_destinations.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 part '../widgets/location_picker.dart';
@@ -32,6 +37,9 @@ class RideDestinationPage extends StatefulWidget implements AutoRouteWrapper {
       ),
       BlocProvider<LocationToAddressCubit>(
         create: (_) => GetIt.I.get<LocationToAddressCubit>(),
+      ),
+      BlocProvider<SavedLocationsCubit>(
+        create: (_) => GetIt.I.get<SavedLocationsCubit>()..getSavedLocations(),
       ),
     ],
     child: this,
@@ -200,14 +208,6 @@ class _RideDestinationPageState extends State<RideDestinationPage> {
                                   icon: Icons.arrow_back_ios_new_rounded,
                                   onPressed: _onBackPressed,
                                 ),
-                              const Text(
-                                'Where to?',
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w700,
-                                  color: KoolbarColors.textSecondary,
-                                ),
-                              ),
                             ],
                           ),
                           const SizedBox(height: 20),
@@ -226,7 +226,25 @@ class _RideDestinationPageState extends State<RideDestinationPage> {
                         ],
                       ),
                     ),
-                    const QuickDestinations(),
+                    BlocBuilder<SavedLocationsCubit, SavedLocationsState>(
+                      builder: (context, state) {
+                        return QuickDestinations(
+                          locations: state.savedLocations,
+                          onNewDestinationClicked: () {
+                            context.router.pushNewSavedLocation().then((value) {
+                              if (value != null) {
+                                context
+                                    .read<SavedLocationsCubit>()
+                                    .updateSavedLocations([value]);
+                              }
+                            });
+                          },
+                          onDestinationSelect: (latitude, longitude) {
+                            _changeCameraPosition(LatLng(latitude, longitude));
+                          },
+                        );
+                      },
+                    ),
                   ],
                 ),
                 Align(

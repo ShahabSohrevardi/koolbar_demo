@@ -6,6 +6,6 @@ import 'package:koolbar_demo/features/ride_request/domain/saved_location_reposit
 @LazySingleton(scope: "RideRequest")
 class SaveNewLocation {
   final SavedLocationRepository _repository;
-  new(this._repository);
+  SaveNewLocation(this._repository);
   Future<Resource<SavedLocationEntity>> call(NewSavedLocationEntity entity) => _repository.saveLocation(entity);
  }

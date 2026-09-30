@@ -8,8 +8,8 @@ class LocationSearch extends StatefulWidget {
     required this.onLocationSelect,
   });
 
-  bool isLoading;
-  LatLng currentLocation;
+  final bool isLoading;
+  final LatLng currentLocation;
   final void Function(LatLng location) onLocationSelect;
 
   @override
@@ -92,7 +92,7 @@ class _LocationSearchState extends State<LocationSearch>
                           onTap: () {},
                           controller: _searchTextController,
                           decoration: InputDecoration(
-                            hintStyle: .new(
+                            hintStyle: TextStyle(
                               color: KoolbarColors.textSecondary,
                               fontSize: 19,
                             ),

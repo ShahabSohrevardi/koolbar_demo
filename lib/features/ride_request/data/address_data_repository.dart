@@ -8,7 +8,7 @@ import 'package:koolbar_demo/features/ride_request/domain/address_repository.dar
 class AddressDataRepository extends AddressRepository {
   final AddressCloudDataSource _cloudDataSource;
 
-  new(this._cloudDataSource);
+  AddressDataRepository(this._cloudDataSource);
 
   @override
   Future<Resource<AddressEntity>> getAddressByState(

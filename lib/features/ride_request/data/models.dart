@@ -6,8 +6,6 @@ part 'models.g.dart';
 
 @HiveType(typeId: savedLocation)
 class SavedLocation {
-  @HiveField(1)
-  final String? id;
   @HiveField(2)
   final String name;
   @HiveField(3)
@@ -17,21 +15,15 @@ class SavedLocation {
   @HiveField(5)
   final int? iconCodePoint;
 
-  new({
-    required this.id,
+  SavedLocation({
     required this.name,
     required this.latitude,
     required this.longitude,
     required this.iconCodePoint,
   });
 
-  set id(String value){
-    id=value;
-  }
-
   factory SavedLocation.fromEntity(NewSavedLocationEntity entity) =>
       SavedLocation(
-        id: null,
         name: entity.name,
         latitude: entity.latitude,
         longitude: entity.longitude,
@@ -39,7 +31,6 @@ class SavedLocation {
       );
 
   SavedLocationEntity toEntity() => SavedLocationEntity(
-    id: id!,
     name: name,
     latitude: latitude,
     longitude: longitude,

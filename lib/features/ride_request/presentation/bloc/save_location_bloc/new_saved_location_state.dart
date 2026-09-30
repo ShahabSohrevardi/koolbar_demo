@@ -5,27 +5,27 @@ sealed class NewSaveLocationState {
   final SavedLocationEntity? savedLocation;
   final String? errorMsg;
 
-  new({this.savedLocation, this.errorMsg});
+  const NewSaveLocationState({this.savedLocation, this.errorMsg});
 
-  factory NewSaveLocationState.success({
+  const factory NewSaveLocationState.success({
     required SavedLocationEntity savedLocation,
-  }) = SaveLocationSuccess;
+  }) = NewSaveLocationSuccess;
 
-  factory NewSaveLocationState.failed({required String errorMsg}) =
-      SavedLocationError;
+  const factory NewSaveLocationState.failed({required String errorMsg}) =
+      NewSavedLocationError;
 
-  factory NewSaveLocationState.loading() = SaveLocationLoading;
+  factory NewSaveLocationState.loading() = NewSaveLocationLoading;
 }
 
-final class SaveLocationSuccess extends NewSaveLocationState {
-  new({required SavedLocationEntity savedLocation})
+final class NewSaveLocationSuccess extends NewSaveLocationState {
+  const NewSaveLocationSuccess({required SavedLocationEntity savedLocation})
     : super(savedLocation: savedLocation);
 }
 
-final class SavedLocationError extends NewSaveLocationState {
-  new({required String errorMsg}) : super(errorMsg: errorMsg);
+final class NewSavedLocationError extends NewSaveLocationState {
+  const NewSavedLocationError({required String errorMsg}) : super(errorMsg: errorMsg);
 }
 
-final class SaveLocationLoading extends NewSaveLocationState {}
+final class NewSaveLocationLoading extends NewSaveLocationState {}
 
-final class SaveLocationInitial extends NewSaveLocationState {}
+final class NewSaveLocationInitial extends NewSaveLocationState {}

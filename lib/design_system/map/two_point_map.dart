@@ -15,7 +15,7 @@ class SelectTwoPointMap extends StatefulWidget {
   final OnMapCenterPositionChanged onChangeCenterLocation;
   final OnMapReady onMapReady;
 
-  const new({
+  const SelectTwoPointMap({
     super.key,
     required this.currentLocation,
     required this.pickupLocation,

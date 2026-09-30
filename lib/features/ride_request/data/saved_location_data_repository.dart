@@ -8,7 +8,7 @@ import 'package:koolbar_demo/features/ride_request/domain/saved_location_reposit
 class SavedLocationDataRepository extends SavedLocationRepository {
   final SavedLocationLocalDataSource _localDataSource;
 
-  new(this._localDataSource);
+  SavedLocationDataRepository(this._localDataSource);
 
   @override
   Future<Resource<List<SavedLocationEntity>>> getSavedLocations() async {

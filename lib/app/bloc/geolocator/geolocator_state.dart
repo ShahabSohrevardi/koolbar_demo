@@ -6,7 +6,7 @@ sealed class GeolocatorState extends Equatable{
   final double? longitude;
   final String? errorMsg;
 
-  const new({this.latitude, this.longitude, this.errorMsg});
+  const GeolocatorState({this.latitude, this.longitude, this.errorMsg});
 
   @override
   // TODO: implement props
@@ -16,12 +16,12 @@ sealed class GeolocatorState extends Equatable{
 final class GeolocatorLoading extends GeolocatorState {}
 
 final class GeolocatorSuccess extends GeolocatorState {
-  new({required double latitude, required double longitude})
+  const GeolocatorSuccess({required double latitude, required double longitude})
     : super(latitude: latitude, longitude: longitude);
 }
 
 final class GeolocatorError extends GeolocatorState {
-  new({required String errorMsg}) : super(errorMsg: errorMsg);
+  const GeolocatorError({required String errorMsg}) : super(errorMsg: errorMsg);
 }
 
 final class GeolocatorInitial extends GeolocatorState {}

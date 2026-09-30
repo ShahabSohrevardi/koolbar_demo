@@ -5,7 +5,7 @@ class LocationPickerSearchedItem {
   final double longitude;
   final String address;
 
-  new({required this.latitude, required this.longitude, required this.address});
+  LocationPickerSearchedItem({required this.latitude, required this.longitude, required this.address});
 }
 
 typedef OnLocationSelect = void Function(LatLng location);
@@ -227,7 +227,7 @@ class _LocationPickerOverlay extends StatefulWidget {
   final GlobalKey parentKey;
   final OnLocationSelect onLocationSelect;
 
-  const new({
+  const _LocationPickerOverlay({
     super.key,
     required this.child,
     required this.layerLink,

@@ -7,7 +7,7 @@ import 'package:koolbar_demo/features/ride_request/domain/entities.dart';
 class SavedLocationLocalDataSource {
   final SavedLocationDao _dao;
 
-  new({required this._dao});
+  SavedLocationLocalDataSource({required this._dao});
 
   Future<String> save(NewSavedLocationEntity entity) =>
       _dao.save(SavedLocation.fromEntity(entity));
