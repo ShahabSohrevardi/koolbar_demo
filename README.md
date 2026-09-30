@@ -102,7 +102,7 @@ lib/
 |----------|-----------|
 | Framework | Flutter, Dart |
 | Map | MapLibre GL, Neshan |
-| Routing | go_router |
+| Routing | auto_route |
 | DI | get_it, injectable |
 | Signal filtering | Kalman Filter (custom implementation) |
 | Architecture | Clean Architecture, Feature-First |
