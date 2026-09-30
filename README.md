@@ -42,7 +42,7 @@ A **modular**, **Clean Architecture** mobile application engineered around **SOL
 <div align="center">
 
 <img src="docs/screen-shots/Screenshot-1.png" alt="Koolbar home screen" width="250" />
-<img src="docs/screen-shots/Screenshot-1.png" width="250" />
+<img src="docs/screen-shots/Screenshot-4.png" width="250" />
 <img src="docs/screen-shots/Screenshot-2.png" width="250" />
 <img src="docs/screen-shots/Screenshot-3.png" width="250" />
 
